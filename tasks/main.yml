@@ -1,0 +1,15 @@
+---
+# tasks file for nginx-role
+- name: install Nginx
+  become: true
+  ansible.builtin.apt:
+    name: nginx
+    state: present
+  notify: Start nginx
+- name: create config Nginx
+  become: true
+  ansible.builtin.template:
+    src: templates/nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+    mode: 0644
+  notify: Reload nginx
